@@ -17,7 +17,7 @@ int help_message()
 
 int error_message()
 {
-    printf("Invalide argument numbers!\n");
+    printf("Invalid argument numbers!\n");
     printf("\n");
     help_message();
     return 1;
@@ -41,7 +41,7 @@ int commit(char* str)
         printf("Cancelling\n");
         return 0;
     default:
-        printf("Invalide parametter!");
+        printf("Invalid parameter!");
         return 1;
     }
 }
@@ -50,43 +50,35 @@ int check_parametter(char** argv)
 {
     char* str = argv[1];
     char* commit_str = argv[2];
+    char* tmp = malloc((strlen(commit_str) + 12) * sizeof(char));
+    
     if (strcmp(str, "-h") == 0 || strcmp(str, "--help") == 0)
     {
         return help_message();
     }
     else if (strcmp(str, "-f") == 0 || strcmp(str, "--fix") == 0)
     {
-        char* tmp = malloc((strlen(commit_str) + 12) * sizeof(char));
         strcat(tmp, "🐜 - ");
-        strcat(tmp, commit_str);
-        return commit(tmp);
     }
     else if (strcmp(str, "-r") == 0 || strcmp(str, "--refactor") == 0)
     {
-        char* tmp = malloc((strlen(commit_str) + 12) * sizeof(char));
         strcat(tmp, "♻️ - ");
-        strcat(tmp, commit_str);
-        return commit(tmp);
     }
     else if (strcmp(str, "-w") == 0 || strcmp(str, "--wip") == 0)
     {
-        char* tmp = malloc((strlen(commit_str) + 12) * sizeof(char));
         strcat(tmp, "🚧 - ");
-        strcat(tmp, commit_str);
-        return commit(tmp);
     }
     else if (strcmp(str, "-n") == 0 || strcmp(str, "--normal") == 0)
     {
-        char* tmp = malloc((strlen(commit_str) + 12) * sizeof(char));
         strcat(tmp, "📝 - ");
-        strcat(tmp, commit_str);
-        return commit(tmp);
     }
     else
     {
         return error_message();
     }
-    return 0;    
+    
+    strcat(tmp, commit_str);
+    return commit(tmp);   
 }
 
 int check_parametter_one_arg(char** argv)
@@ -100,7 +92,6 @@ int check_parametter_one_arg(char** argv)
     {
         return commit(str);
     }
-    return 0;    
 }
 
 int main(int argc, char** argv)
